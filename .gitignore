@@ -38,10 +38,8 @@ share/python-wheels/
 *.sqlite
 *.sqlite3
 
-# Data files (Recommended to ignore if large)
+# Data files (large CSVs ignored; .pkl model files ARE tracked)
 *.csv
-*.pkl
-*.jsonl
 
 # OS generated files
 .DS_Store

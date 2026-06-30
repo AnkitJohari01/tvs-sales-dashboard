@@ -179,6 +179,12 @@ import io
 # ── GET /download-data-csv ────────────────────────────────────
 @app.get("/download-data-csv")
 def download_data_csv():
+    import os
+    if not os.path.exists("april_2026_detailed_forecast.csv"):
+        raise HTTPException(
+            status_code=503,
+            detail="Detailed forecast CSV is not available on this deployment. Please run locally to access this file."
+        )
     try:
         # We generate the requested 1.7M rows on the fly quickly
         fc = pd.read_csv("april_2026_detailed_forecast.csv")
