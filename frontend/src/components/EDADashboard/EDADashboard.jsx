@@ -165,7 +165,7 @@ export default function EDADashboard() {
             {/* <p className="eda-subtitle">A plain-language look at your sales — no jargon, just answers.</p> */}
           </div>
           <div style={{display: 'flex', gap: '12px'}}>
-            <a className="btn-download" href="http://localhost:8000/download-data-csv" download style={{textDecoration:'none', color:'#1A1A2E', display:'flex', alignItems:'center'}}>
+            <a className="btn-download" href={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/download-data-csv`} download style={{textDecoration:'none', color:'#1A1A2E', display:'flex', alignItems:'center'}}>
               <span style={{marginRight:'8px'}}>📊</span> Download CSV
             </a>
             <button className="btn-download" onClick={handleDownloadPDF} style={{display:'flex', alignItems:'center'}}>
