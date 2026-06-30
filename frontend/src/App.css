@@ -1,0 +1,9 @@
+/* ── App-level layout styles ───────────────────────────────── */
+
+.main-content {
+  flex: 1;
+}
+
+.section {
+  padding: var(--sp-8) 0 var(--sp-12);
+}

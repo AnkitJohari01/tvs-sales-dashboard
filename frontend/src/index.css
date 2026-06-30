@@ -1,0 +1,186 @@
+/* ============================================================
+   TVS Sales Forecast — Global Design System
+   Palette:  Teal (#0D9488 → #14B8A6) + Coral (#F97066 → #FB923C)
+   Background: Deep navy (#0F172A)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── CSS Custom Properties (Design Tokens) ─────────────────── */
+:root {
+  /* --- Palette (Sage & Midnight) --- */
+  --clr-bg-primary:    #0B1120; /* Midnight */
+  --clr-bg-secondary:  #1E293B;
+  --clr-bg-card:       #1E293B;
+  --clr-bg-card-hover: #334155;
+  --clr-bg-input:      #0B1120;
+  --clr-bg-glass:      rgba(30, 41, 59, 0.85);
+
+  /* Sage Green (Kept var names as teal for compatibility) */
+  --clr-teal-400:      #A3B18A;
+  --clr-teal-500:      #84A98C;
+  --clr-teal-600:      #52796F;
+  --clr-teal-700:      #354F52;
+
+  /* Terracotta (Kept var names as coral) */
+  --clr-coral-400:     #E29578;
+  --clr-coral-500:     #E07A5F;
+  --clr-coral-600:     #D45B3E;
+
+  --clr-violet-400:    #A78BFA;
+  --clr-violet-500:    #8B5CF6;
+
+  --clr-text-primary:  #F8FAFC;
+  --clr-text-secondary:#CBD5E1;
+  --clr-text-muted:    #94A3B8;
+  --clr-text-accent:   var(--clr-teal-400);
+
+  --clr-border:        rgba(132, 169, 140, 0.2); /* Faint sage border */
+  --clr-border-focus:  var(--clr-teal-500);
+
+  --clr-success:       #84A98C;
+  --clr-warning:       #E29578;
+  --clr-error:         #EF4444;
+
+  /* --- Gradients --- */
+  --grad-teal:         linear-gradient(135deg, #52796F, #A3B18A);
+  --grad-coral:        linear-gradient(135deg, #E07A5F, #E29578);
+  --grad-hero:         linear-gradient(135deg, #52796F 0%, #A3B18A 40%, #E07A5F 100%);
+  --grad-card-border:  linear-gradient(135deg, var(--clr-teal-600), var(--clr-coral-500));
+  --grad-glow:         radial-gradient(ellipse at 50% 0%, rgba(132, 169, 140, 0.15), transparent 60%);
+
+  /* --- Typography --- */
+  --font-family:       'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-xs:             0.75rem;
+  --fs-sm:             0.875rem;
+  --fs-md:             1rem;
+  --fs-lg:             1.125rem;
+  --fs-xl:             1.25rem;
+  --fs-2xl:            1.5rem;
+  --fs-3xl:            1.875rem;
+  --fs-4xl:            2.25rem;
+
+  /* --- Spacing --- */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* --- Radius --- */
+  --radius-sm:  0.375rem;
+  --radius-md:  0.625rem;
+  --radius-lg:  0.875rem;
+  --radius-xl:  1.25rem;
+  --radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:  0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg:  0 10px 25px rgba(0,0,0,0.35);
+  --shadow-glow-teal:  0 0 20px rgba(132, 169, 140, 0.25); /* Sage glow */
+  --shadow-glow-coral: 0 0 20px rgba(226, 149, 120, 0.25); /* Terra glow */
+
+  /* --- Transitions --- */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--clr-bg-primary);
+  color: var(--clr-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--clr-teal-400); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; display: block; }
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--clr-bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--clr-text-muted); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-text-secondary); }
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(13,148,136,0.2); }
+  50%      { box-shadow: 0 0 20px rgba(13,148,136,0.4); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Utility Classes ───────────────────────────────────────── */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s var(--transition-slow) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+
+.text-gradient {
+  background: var(--grad-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Responsive Container ──────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--sp-6);
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 var(--sp-4); }
+}

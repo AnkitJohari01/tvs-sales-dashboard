@@ -1,0 +1,186 @@
+/* ── ForecastForm Styles ────────────────────────────────────── */
+
+.forecast-form {
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-8);
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Header */
+.forecast-form__header {
+  margin-bottom: var(--sp-8);
+}
+
+.forecast-form__title {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.forecast-form__title-icon {
+  font-size: 1.6rem;
+}
+
+.forecast-form__subtitle {
+  margin-top: var(--sp-2);
+  color: var(--clr-text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+/* Fieldset group */
+.forecast-form__group {
+  border: none;
+  padding: 0;
+  margin-bottom: var(--sp-6);
+}
+
+.forecast-form__legend {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--clr-text-secondary);
+  margin-bottom: var(--sp-4);
+}
+
+.forecast-form__legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.forecast-form__legend-dot--teal   { background: var(--clr-teal-400); }
+.forecast-form__legend-dot--coral  { background: var(--clr-coral-500); }
+.forecast-form__legend-dot--violet { background: var(--clr-violet-400); }
+
+/* Row layouts */
+.forecast-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-4);
+}
+
+.forecast-form__row--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.forecast-form__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+}
+
+/* Field */
+.forecast-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.forecast-form__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.forecast-form__input {
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--clr-bg-input);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  color: var(--clr-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--fs-sm);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.forecast-form__input:focus {
+  border-color: var(--clr-teal-500);
+  box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+
+.forecast-form__input:hover {
+  border-color: rgba(148,163,184,0.25);
+}
+
+/* Date input color fix for dark theme */
+.forecast-form__input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+}
+
+/* Submit button */
+.forecast-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: var(--sp-4) var(--sp-8);
+  margin-top: var(--sp-4);
+  font-family: var(--font-family);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: #fff;
+  background: var(--grad-teal);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-glow-teal);
+}
+
+.forecast-form__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(13,148,136,0.35);
+}
+
+.forecast-form__submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.forecast-form__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Error */
+.forecast-form__error {
+  margin-top: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: var(--radius-md);
+  color: var(--clr-error);
+  font-size: var(--fs-sm);
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .forecast-form {
+    padding: var(--sp-5);
+  }
+
+  .forecast-form__row,
+  .forecast-form__row--3,
+  .forecast-form__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .forecast-form__row,
+  .forecast-form__row--3,
+  .forecast-form__grid {
+    grid-template-columns: 1fr;
+  }
+}
