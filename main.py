@@ -22,11 +22,17 @@ except ImportError:
 
 app = FastAPI(title="Sales Forecast API")
 
-# ── CORS — allow React dev server to reach us ────────────────
+# ── CORS — allow React dev server + Vercel deployment ────────
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",")
+ALLOWED_ORIGINS += [
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+# Allow all origins if ALLOWED_ORIGINS env var is set to "*"
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
-    allow_credentials=True,
+    allow_origins=["*"],   # Public API — open to all
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
