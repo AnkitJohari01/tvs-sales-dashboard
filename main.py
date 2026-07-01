@@ -151,15 +151,18 @@ def forecast(req: ForecastRequest):
             hw = hw[hw["Item Description"] == req.product]
 
         # Optimization to prevent OOM crash on Render (512MB RAM):
-        # If no specific customer/product is selected, the cross-join with 30 days generates 1.7M rows.
-        # Instead, we aggregate to the Branch level to save massive amounts of memory.
-        if not req.customer and not req.product and len(hw) > 500:
-            hw = hw.groupby("Branch")["weight"].sum().reset_index()
-            hw["CustomerName"] = "All Customers (Aggregated)"
-            hw["Cust.Code"] = "ALL"
-            hw["Item Description"] = "All Products"
-            hw["Sales Employee Name"] = "Multiple"
-            hw["LastDateOfPurchase"] = "N/A"
+        # 1.7M rows (57k customers * 30 days) causes the server to crash.
+        # We preserve the top 2000 customers by weight and aggregate the tail.
+        if not req.customer and not req.product and (len(hw) * req.days) > 150000:
+            hw = hw.sort_values("weight", ascending=False)
+            top_hw = hw.head(2000).copy()
+            other_hw = hw.iloc[2000:].groupby("Branch")["weight"].sum().reset_index()
+            other_hw["CustomerName"] = "Other Customers (Aggregated)"
+            other_hw["Cust.Code"] = "OTHER"
+            other_hw["Item Description"] = "Multiple Products"
+            other_hw["Sales Employee Name"] = "Multiple"
+            other_hw["LastDateOfPurchase"] = "N/A"
+            hw = pd.concat([top_hw, other_hw], ignore_index=True)
 
         daily_df["_key"] = 1
         hw["_key"] = 1
