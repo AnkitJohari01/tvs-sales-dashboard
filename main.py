@@ -355,13 +355,9 @@ def get_eda_full():
 
     # ── 10. Forecast vs Actual (daily, April 2026) ────────────
     try:
-        fc = pd.read_csv("april_2026_detailed_forecast.csv")
-        fc["ForecastedDate"] = pd.to_datetime(fc["ForecastedDate"])
-        fc_daily = fc.groupby("ForecastedDate").agg(
-            forecast=("ForecastedRevenue", "sum"),
-            upper=("UpperBound", "sum"),
-            lower=("LowerBound", "sum")
-        ).reset_index()
+        # Load lightweight aggregated bounds instead of the massive 183MB detailed file (which isn't on GitHub)
+        fc_daily = pd.read_csv("april_2026_daily_forecast_bounds.csv")
+        fc_daily["ForecastedDate"] = pd.to_datetime(fc_daily["ForecastedDate"])
         fc_daily = fc_daily.sort_values("ForecastedDate")
         fc_daily["ForecastedDate"] = fc_daily["ForecastedDate"].astype(str)
         forecast_vs = fc_daily.to_dict(orient="records")
