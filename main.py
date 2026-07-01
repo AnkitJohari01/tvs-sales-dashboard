@@ -168,7 +168,10 @@ def forecast(req: ForecastRequest):
         detailed["ForecastedRevenue"] = (detailed["total_inr"] * detailed["weight"]).round(2)
 
         # ── Step 3: Rename & select final columns ─────────────
-        detail_columns = metadata.get("detail_columns", [])
+        DETAIL_COLS_FALLBACK = ["Branch", "Cust.Code", "CustomerName", "Sales Employee Name", "Item Description"]
+        detail_columns = metadata.get("detail_columns", DETAIL_COLS_FALLBACK)
+        if not detail_columns:
+            detail_columns = DETAIL_COLS_FALLBACK
         detailed = detailed.rename(columns={"date": "ForecastedDate"})
 
         final_cols = ["ForecastedDate"] + detail_columns + ["ForecastedRevenue", "LastDateOfPurchase"]
