@@ -8,7 +8,9 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
  * Generic fetch wrapper with error handling
  */
 async function request(endpoint, options = {}) {
-  const url = `${API_BASE}${endpoint}`;
+  // Remove trailing slash from API_BASE if present to prevent //endpoint and CORS 307 redirect issues
+  const cleanBase = API_BASE.replace(/\/$/, '');
+  const url = `${cleanBase}${endpoint}`;
 
   const config = {
     headers: { 'Content-Type': 'application/json' },

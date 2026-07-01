@@ -141,30 +141,38 @@ def forecast(req: ForecastRequest):
 
         daily_df = pd.DataFrame(daily_forecasts)
 
-        # ── Step 2: Allocate to each customer/branch/product ─
-        daily_df["_key"]              = 1
-        historical_weights["_key"]    = 1
-        detailed = pd.merge(daily_df, historical_weights, on="_key").drop(columns="_key")
+        # ── Step 2: Allocate & Filter ─────────────────────────
+        hw = historical_weights.copy()
+        if req.branch:
+            hw = hw[hw["Branch"] == req.branch]
+        if req.customer:
+            hw = hw[(hw["CustomerName"] == req.customer) | (hw["Cust.Code"] == req.customer)]
+        if req.product:
+            hw = hw[hw["Item Description"] == req.product]
+
+        # Optimization to prevent OOM crash on Render (512MB RAM):
+        # If no specific customer/product is selected, the cross-join with 30 days generates 1.7M rows.
+        # Instead, we aggregate to the Branch level to save massive amounts of memory.
+        if not req.customer and not req.product and len(hw) > 500:
+            hw = hw.groupby("Branch")["weight"].sum().reset_index()
+            hw["CustomerName"] = "All Customers (Aggregated)"
+            hw["Cust.Code"] = "ALL"
+            hw["Item Description"] = "All Products"
+            hw["Sales Employee Name"] = "Multiple"
+            hw["LastDateOfPurchase"] = "N/A"
+
+        daily_df["_key"] = 1
+        hw["_key"] = 1
+        detailed = pd.merge(daily_df, hw, on="_key").drop(columns="_key")
 
         detailed["ForecastedRevenue"] = (detailed["total_inr"] * detailed["weight"]).round(2)
 
-        # Apply Filters
-        if req.branch:
-            detailed = detailed[detailed["Branch"] == req.branch]
-        if req.customer:
-            detailed = detailed[(detailed["CustomerName"] == req.customer) | (detailed["Cust.Code"] == req.customer)]
-        if req.product:
-            detailed = detailed[detailed["Item Description"] == req.product]
-
         # ── Step 3: Rename & select final columns ─────────────
-        # detail_columns comes from metadata — same as notebook's available_detail_cols
-        # So if notebook groupby changes, API output changes automatically too.
         detail_columns = metadata.get("detail_columns", [])
-
         detailed = detailed.rename(columns={"date": "ForecastedDate"})
 
         final_cols = ["ForecastedDate"] + detail_columns + ["ForecastedRevenue", "LastDateOfPurchase"]
-        detailed   = detailed[[c for c in final_cols if c in detailed.columns]]
+        detailed = detailed[[c for c in final_cols if c in detailed.columns]]
         detailed["ForecastedDate"] = detailed["ForecastedDate"].astype(str)
 
         return {
