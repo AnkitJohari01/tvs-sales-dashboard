@@ -1,0 +1,11 @@
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(24px, 0, 0);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}

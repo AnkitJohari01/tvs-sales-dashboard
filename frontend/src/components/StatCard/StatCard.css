@@ -1,0 +1,101 @@
+/* ── StatCard Styles ────────────────────────────────────────── */
+
+.stat-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  animation: fadeInUp 0.5s ease both;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(148,163,184,0.2);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Gradient glow behind card */
+.stat-card__glow {
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.15;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.stat-card:hover .stat-card__glow {
+  opacity: 0.3;
+}
+
+.stat-card--teal .stat-card__glow  { background: var(--clr-teal-400); }
+.stat-card--coral .stat-card__glow { background: var(--clr-coral-500); }
+.stat-card--violet .stat-card__glow { background: var(--clr-violet-400); }
+
+/* Icon */
+.stat-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.stat-card--teal .stat-card__icon {
+  background: rgba(13,148,136,0.15);
+}
+.stat-card--coral .stat-card__icon {
+  background: rgba(249,112,102,0.15);
+}
+.stat-card--violet .stat-card__icon {
+  background: rgba(167,139,250,0.15);
+}
+
+/* Body */
+.stat-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.stat-card__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--clr-text-muted);
+}
+
+.stat-card__value {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  line-height: 1.2;
+}
+
+.stat-card--teal .stat-card__value  { color: var(--clr-teal-400); }
+.stat-card--coral .stat-card__value { color: var(--clr-coral-400); }
+.stat-card--violet .stat-card__value { color: var(--clr-violet-400); }
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .stat-card {
+    padding: var(--sp-4);
+  }
+  .stat-card__value {
+    font-size: var(--fs-xl);
+  }
+}

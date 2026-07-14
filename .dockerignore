@@ -1,0 +1,9 @@
+tvsenv/
+frontend/node_modules/
+__pycache__/
+*.pyc
+.git/
+*.csv
+.env
+settings.json
+model_report.json

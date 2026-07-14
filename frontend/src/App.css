@@ -1,0 +1,18 @@
+/* ── App-level layout styles ───────────────────────────────── */
+
+.main-content {
+  flex: 1;
+}
+
+.section {
+  padding: var(--sp-8) 0 var(--sp-12);
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--clr-border), transparent);
+}

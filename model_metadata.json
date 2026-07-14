@@ -1,0 +1,34 @@
+{
+  "winner_model_name": "XGBoost (tuned)",
+  "winner_mape": 22.65,
+  "feature_columns": [
+    "lag_1",
+    "lag_2",
+    "lag_3",
+    "lag_6",
+    "lag_7",
+    "lag_14",
+    "lag_21",
+    "lag_28",
+    "roll7_mean",
+    "roll7_std",
+    "roll28_mean",
+    "day_of_week",
+    "is_weekend",
+    "month",
+    "day_of_month",
+    "is_month_end",
+    "quarter",
+    "is_holiday",
+    "is_monsoon",
+    "pre_diwali_week",
+    "post_diwali_week",
+    "days_to_diwali"
+  ],
+  "all_models_mape": {
+    "XGBoost (tuned)": 14.889177902994948,
+    "Lasso": 219.58371269292996,
+    "Prophet (tuned)": 489.7104701982288,
+    "SARIMA": 5290.562887510857
+  }
+}

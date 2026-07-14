@@ -1,0 +1,30 @@
+.cursor-trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1400;
+  overflow: hidden;
+}
+
+.cursor-trail__dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 59, 30, 0.9) 0%, rgba(255, 59, 30, 0.2) 45%, rgba(255, 59, 30, 0) 72%);
+  filter: blur(0.4px);
+  transform: translate(-50%, -50%);
+  opacity: 0.4;
+  animation: cursorFade 0.65s ease-out forwards;
+}
+
+@keyframes cursorFade {
+  from {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+}

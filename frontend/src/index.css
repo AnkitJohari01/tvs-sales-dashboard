@@ -1,0 +1,219 @@
+/* ============================================================
+   TVS Sales Forecast — Editorial Monograph Design System
+   A print-monograph reskin: type-led, high-contrast, art-directed.
+   Ink black + paper white + a single risograph accent.
+   (Reskin only — no forecasting logic changed. Legacy token NAMES
+    are preserved so every component restyles without edits.)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Archivo:wght@300;400;500;600;700;800;900&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ── CSS Custom Properties (Design Tokens) ─────────────────── */
+:root {
+  /* --- Palette (Ink & Paper) --- */
+  --clr-bg-primary:    #0A0A0A; /* Ink */
+  --clr-bg-secondary:  #141414;
+  --clr-bg-card:       #121212;
+  --clr-bg-card-hover: #1C1C1C;
+  --clr-bg-input:      #0A0A0A;
+  --clr-bg-glass:      rgba(10, 10, 10, 0.85);
+
+  /* Paper white (kept var names as teal for compatibility) */
+  --clr-teal-400:      #F4F1EA;
+  --clr-teal-500:      #EDE8DC;
+  --clr-teal-600:      #C9C3B4;
+  --clr-teal-700:      #8A857A;
+
+  /* Risograph accent — hot red-orange (kept var names as coral) */
+  --clr-coral-400:     #FF5A3C;
+  --clr-coral-500:     #FF3B1E;
+  --clr-coral-600:     #E12A10;
+
+  --clr-violet-400:    #2E5BFF; /* riso blue — secondary specimen accent */
+  --clr-violet-500:    #1E43D8;
+
+  --clr-text-primary:  #F4F1EA; /* paper */
+  --clr-text-secondary:#B9B4A9;
+  --clr-text-muted:    #7A756B;
+  --clr-text-accent:   var(--clr-coral-500);
+
+  --clr-border:        rgba(244, 241, 234, 0.16); /* faint hairline rule */
+
+  /* Legacy aliases — components (e.g. Data Studio) referenced these names before
+     the --clr-* system existed. Mapping them here fixes their styling without
+     touching each call site. */
+  --bg-surface:   var(--clr-bg-card);
+  --bg-dark:      var(--clr-bg-input);
+  --border-color: var(--clr-border);
+  --text-primary: var(--clr-text-primary);
+  --text-secondary: var(--clr-text-secondary);
+  --primary-color: var(--clr-coral-500);
+  --primary-hover: var(--clr-coral-600);
+  --clr-border-focus:  var(--clr-coral-500);
+
+  --clr-success:       #EDE8DC;
+  --clr-warning:       #FF5A3C;
+  --clr-error:         #FF3B1E;
+
+  /* --- Gradients (kept subtle; monograph is flat-ink first) --- */
+  --grad-teal:         linear-gradient(135deg, #C9C3B4, #F4F1EA);
+  --grad-coral:        linear-gradient(135deg, #FF3B1E, #FF5A3C);
+  --grad-hero:         linear-gradient(100deg, #F4F1EA 0%, #F4F1EA 55%, #FF3B1E 55%, #FF3B1E 100%);
+  --grad-card-border:  linear-gradient(135deg, var(--clr-coral-500), var(--clr-coral-600));
+  --grad-glow:         radial-gradient(ellipse at 50% 0%, rgba(255, 59, 30, 0.10), transparent 60%);
+
+  /* --- Typography: editorial pairing ---
+     Display: Fraunces (high-contrast optical serif) — oversized headlines.
+     Text/UI: Archivo (grotesque) — copy, labels, controls.
+     Mono:    JetBrains Mono — data, code, specimens. */
+  --font-family:        'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display:       'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-mono:          'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --fs-xs:             0.75rem;
+  --fs-sm:             0.875rem;
+  --fs-md:             1rem;
+  --fs-lg:             1.125rem;
+  --fs-xl:             1.375rem;
+  --fs-2xl:            1.75rem;
+  --fs-3xl:            2.5rem;
+  --fs-4xl:            clamp(3rem, 8vw, 6rem);
+
+  /* --- Spacing --- */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* --- Radius (print-sharp: near-square edges) --- */
+  --radius-sm:  0px;
+  --radius-md:  1px;
+  --radius-lg:  2px;
+  --radius-xl:  3px;
+  --radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 6px rgba(0,0,0,0.4);
+  --shadow-lg:  0 12px 30px rgba(0,0,0,0.5);
+  --shadow-glow-teal:  0 0 0 1px rgba(244, 241, 234, 0.18);
+  --shadow-glow-coral: 0 0 22px rgba(255, 59, 30, 0.30);
+
+  /* --- Transitions --- */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--clr-bg-primary);
+  color: var(--clr-text-primary);
+  line-height: 1.55;
+  min-height: 100vh;
+  /* faint paper grain so the ink field doesn't read as flat digital black */
+  background-image:
+    radial-gradient(rgba(244,241,234,0.018) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* Editorial headings — high-contrast optical serif, oversized & tight */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  font-optical-sizing: auto;
+}
+h1 { font-size: var(--fs-4xl); font-weight: 700; }
+h2 { font-size: var(--fs-3xl); }
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--clr-coral-500); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; display: block; }
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--clr-bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--clr-text-muted); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-text-secondary); }
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(13,148,136,0.2); }
+  50%      { box-shadow: 0 0 20px rgba(13,148,136,0.4); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Utility Classes ───────────────────────────────────────── */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s var(--transition-slow) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+
+.text-gradient {
+  background: var(--grad-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Responsive Container ──────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--sp-6);
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 var(--sp-4); }
+}

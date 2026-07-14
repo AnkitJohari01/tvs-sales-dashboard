@@ -1,0 +1,32 @@
+/* ── ForecastResults Additional Styles ──────────────────────── */
+.forecast-results__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.forecast-results__select {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--clr-bg-input);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  color: var(--clr-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--fs-sm);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.forecast-results__select:focus {
+  border-color: var(--clr-border-focus);
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
+}
+
+.forecast-results__search-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}

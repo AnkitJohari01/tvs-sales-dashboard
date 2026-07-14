@@ -1,0 +1,451 @@
+/* ============================================================
+   EDA Dashboard — Full Visualization Suite
+   Palette: Ink #0A0A0A | Card #121212 | Accent (coral) #FF3B1E | Blue #2E5BFF
+   ============================================================ */
+
+.eda-dashboard {
+  padding: var(--sp-8) 0 var(--sp-16);
+  color: var(--clr-text-primary);
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.eda-header { 
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: var(--sp-8); 
+}
+.eda-header-left { text-align: left; }
+.eda-title {
+  font-size: var(--fs-3xl); font-weight: 700;
+  background: linear-gradient(135deg, #FF3B1E, #FF5A3C);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: var(--sp-2);
+}
+
+.eda-title {
+  font-size: var(--fs-3xl); font-weight: 700;
+  background: linear-gradient(135deg, #FF3B1E, #FF5A3C);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: var(--sp-2);
+}
+
+.eda-subtitle { color: var(--clr-text-muted); font-size: var(--fs-md); max-width: 520px; margin: 0 auto; }
+
+/* ── KPI Cards Row ──────────────────────────────────── */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+@media (max-width: 900px)  { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px)  { .kpi-row { grid-template-columns: 1fr; } }
+
+.kpi-card {
+  background: #121212; border: 1px solid rgba(244,241,234,0.16);
+  border-radius: var(--radius-xl); padding: var(--sp-6);
+  display: flex; align-items: center; gap: var(--sp-4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+.kpi-card:hover { transform: translateY(-3px); border-color: rgba(255,90,60,0.40); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+
+.kpi-card__icon { font-size: 1.8rem; }
+.kpi-card__value { display: block; font-size: var(--fs-2xl); font-weight: 700; color: #FF5A3C; }
+.kpi-card__label { display: block; font-size: var(--fs-sm); color: #F4F1EA; opacity: 0.8; margin-top: 2px; }
+
+/* ── Two-Column Row (MoM + Progress) ────────────────── */
+.eda-two-col {
+  display: grid; grid-template-columns: 1fr 2fr; gap: var(--sp-6);
+  margin-bottom: var(--sp-6);
+}
+@media (max-width: 900px) { .eda-two-col { grid-template-columns: 1fr; } }
+
+/* ── Metric Tile (MoM) ─────────────────────────────── */
+.metric-tile {
+  background: #121212; border: 1px solid rgba(244,241,234,0.16);
+  border-radius: var(--radius-xl); padding: var(--sp-6);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--sp-2);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.metric-tile:hover { border-color: rgba(255,90,60,0.40); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+
+.metric-tile__arrow {
+  font-size: 2.5rem; font-weight: 800; letter-spacing: -1px;
+}
+.metric-tile__arrow.positive { color: #FF3B1E; }
+.metric-tile__arrow.negative { color: #FF3B1E; }
+
+.metric-tile__sub { font-size: var(--fs-sm); color: #7A756B; }
+.metric-tile__spark { width: 100%; margin-top: var(--sp-2); }
+
+/* ── Progress Card ──────────────────────────────────── */
+.progress-card {
+  background: #121212; border: 1px solid rgba(244,241,234,0.16);
+  border-radius: var(--radius-xl); padding: var(--sp-6);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.progress-card:hover { border-color: rgba(255,90,60,0.40); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+.progress-card h3 { font-size: var(--fs-lg); font-weight: 600; margin-bottom: var(--sp-1); }
+.progress-card__label { font-size: var(--fs-sm); color: #7A756B; margin-bottom: var(--sp-4); }
+
+.progress-bar {
+  position: relative; height: 28px; background: #2A2A2A; border-radius: var(--radius-full);
+  overflow: visible;
+}
+.progress-bar__fill {
+  height: 100%; background: linear-gradient(90deg, #FF3B1E, #E12A10); border-radius: var(--radius-full);
+  transition: width 1s ease;
+}
+.progress-bar__marker {
+  position: absolute; top: -4px; width: 3px; height: 36px;
+  background: #FF5A3C; border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255,59,30,0.60);
+}
+.progress-bar__legend {
+  display: flex; gap: var(--sp-4); margin-top: var(--sp-3); font-size: var(--fs-xs); color: #7A756B;
+}
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.dot--teal { background: #FF3B1E; }
+.dot--grey { background: #2A2A2A; }
+.dot--gold { background: #FF5A3C; }
+
+/* ── Chart Grid ─────────────────────────────────────── */
+.eda-grid {
+  display: grid; grid-template-columns: 1fr; gap: var(--sp-6);
+  margin-bottom: var(--sp-6);
+}
+@media (min-width: 1024px) { .eda-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* Uniform vertical spacing between every dashboard section */
+.eda-two-col,
+.eda-grid,
+.eda-table-section,
+.eda-health-section { margin-bottom: var(--sp-6); }
+.eda-table-section { margin-top: 0; }
+
+/* ── Card ───────────────────────────────────────────── */
+.eda-card {
+  background: #121212; border: 1px solid rgba(244,241,234,0.16);
+  border-radius: var(--radius-xl); padding: var(--sp-6);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: flex; flex-direction: column;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.eda-card:hover { border-color: rgba(255,90,60,0.40); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+.eda-card h3 { font-size: var(--fs-lg); font-weight: 600; margin-bottom: var(--sp-1); }
+.eda-card > p { font-size: var(--fs-sm); color: #7A756B; margin-bottom: var(--sp-4); }
+
+.eda-chart-wrapper { flex-grow: 1; width: 100%; height: 350px; }
+.eda-chart-wrapper--donut { position: relative; }
+
+/* ── Insight Strip ──────────────────────────────────── */
+.eda-insight {
+  margin-top: var(--sp-4); padding: var(--sp-3) var(--sp-4);
+  background: rgba(255,59,30,0.06); border-left: 3px solid #FF3B1E;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: var(--fs-sm); color: #B9B4A9; line-height: 1.6; font-style: italic;
+}
+
+/* ── Tooltip ────────────────────────────────────────── */
+.eda-tooltip {
+  background: #0A0A0A; border: 1px solid rgba(255,90,60,0.40);
+  border-radius: 8px; padding: 10px 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  font-size: 12px;
+}
+.eda-tooltip__label { color: #F4F1EA; font-weight: 600; margin-bottom: 4px; }
+.eda-tooltip p { margin: 2px 0; }
+
+/* ── Donut Center Label ─────────────────────────────── */
+.donut-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%);
+  text-align: center; pointer-events: none; z-index: 2;
+}
+.donut-center__value { display: block; font-size: var(--fs-xl); font-weight: 700; color: #FF5A3C; }
+.donut-center__label { display: block; font-size: var(--fs-xs); color: #7A756B; }
+
+/* ── Calendar Heatmap ───────────────────────────────── */
+.cal-heatmap { padding: var(--sp-4) 0; flex-grow: 1; }
+
+.cal-heatmap__header {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  margin-bottom: 6px; text-align: center; font-size: var(--fs-xs); color: #7A756B;
+}
+.cal-heatmap__row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 4px; }
+
+.cal-heatmap__cell {
+  aspect-ratio: 1; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  cursor: default; transition: transform var(--transition-fast);
+  position: relative;
+}
+.cal-heatmap__cell:hover { transform: scale(1.15); z-index: 2; }
+.cal-heatmap__cell--empty { background: rgba(255,255,255,0.03); }
+.cal-heatmap__day { font-size: 10px; font-weight: 600; color: #0A0A0A; }
+
+.cal-heatmap__scale {
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  margin-top: var(--sp-3); font-size: var(--fs-xs); color: #7A756B;
+}
+.cal-heatmap__gradient {
+  width: 100px; height: 10px; border-radius: 5px;
+  background: linear-gradient(90deg, #F4F1EA, #FF3B1E);
+}
+
+/* ── Leaderboard ────────────────────────────────────── */
+.leaderboard { display: flex; flex-direction: column; gap: var(--sp-3); flex-grow: 1; justify-content: center; }
+
+.leaderboard__row {
+  display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3);
+  border-radius: var(--radius-md); background: rgba(255,255,255,0.03);
+  transition: background var(--transition-fast);
+}
+.leaderboard__row:hover { background: rgba(255,255,255,0.06); }
+.leaderboard__row--gold { background: rgba(255,59,30,0.10); border: 1px solid rgba(255,59,30,0.30); }
+
+.leaderboard__rank { font-size: var(--fs-lg); font-weight: 700; min-width: 32px; color: #7A756B; }
+.leaderboard__row--gold .leaderboard__rank { color: #FF5A3C; }
+
+.leaderboard__info { flex: 1; }
+.leaderboard__name { display: block; font-size: var(--fs-sm); font-weight: 500; margin-bottom: 4px; }
+.leaderboard__bar-bg { height: 6px; background: #2A2A2A; border-radius: 3px; }
+.leaderboard__bar-fill { height: 100%; background: #FF3B1E; border-radius: 3px; transition: width 0.8s ease; }
+.leaderboard__row--gold .leaderboard__bar-fill { background: #FF5A3C; }
+
+.leaderboard__value { font-size: var(--fs-sm); font-weight: 600; color: #F4F1EA; white-space: nowrap; }
+
+/* ── Color-Coded Table ──────────────────────────────── */
+.eda-table-section {
+  background: #121212; border: 1px solid rgba(244,241,234,0.16);
+  border-radius: var(--radius-xl); padding: var(--sp-6); margin-top: var(--sp-2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.eda-table-section:hover { border-color: rgba(255,90,60,0.40); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+.eda-table-section h3 { font-size: var(--fs-lg); font-weight: 600; margin-bottom: var(--sp-1); }
+.eda-table-section > p { font-size: var(--fs-sm); color: #7A756B; margin-bottom: var(--sp-4); }
+
+.eda-table-wrap { overflow-x: auto; max-height: 400px; overflow-y: auto; }
+
+.eda-table {
+  width: 100%; border-collapse: collapse; font-size: var(--fs-sm);
+}
+.eda-table th {
+  position: sticky; top: 0; background: #0A0A0A; color: #7A756B;
+  font-weight: 600; text-align: left; padding: var(--sp-3) var(--sp-4);
+  border-bottom: 2px solid rgba(244,241,234,0.16); z-index: 2;
+}
+.eda-table td {
+  padding: var(--sp-2) var(--sp-4); border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.sticky-col {
+  position: sticky; left: 0; z-index: 1; background: inherit;
+}
+
+.eda-table__row--high { background: rgba(255,59,30,0.08); }
+.eda-table__row--high td { color: #FF3B1E; }
+.eda-table__row--low  { background: rgba(122,117,107,0.12); }
+.eda-table__row--low td  { color: #7A756B; }
+.eda-table__row--avg td  { color: #F4F1EA; }
+
+.text-green { color: #FF3B1E; font-weight: 600; }
+.text-red   { color: #7A756B; font-weight: 600; }
+
+/* ── Loading / Error ────────────────────────────────── */
+.eda-loading {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: var(--sp-16) 0; color: #7A756B;
+}
+.eda-spinner {
+  width: 40px; height: 40px; border: 3px solid rgba(244,241,234,0.16);
+  border-top-color: #FF3B1E; border-radius: 50%; animation: spin 1s linear infinite;
+  margin-bottom: var(--sp-4);
+}
+.eda-error {
+  text-align: center; padding: var(--sp-8); background: rgba(255,59,30,0.10);
+  border: 1px solid rgba(255,59,30,0.20); border-radius: var(--radius-lg); color: #FF3B1E;
+}
+.eda-retry-btn {
+  margin-top: var(--sp-4); padding: var(--sp-2) var(--sp-6);
+  background: #FF3B1E; color: #0A0A0A; border: none; border-radius: var(--radius-md);
+  cursor: pointer; font-weight: 600; transition: background var(--transition-fast);
+}
+.eda-retry-btn:hover { background: #E12A10; }
+
+/* ── New Features: Download, Alert, Target Input, Health Table ── */
+
+.btn-download {
+  background: #FF5A3C; color: #0A0A0A;
+  border: none; border-radius: var(--radius-md);
+  padding: var(--sp-2) var(--sp-4);
+  font-weight: 700; cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  height: fit-content;
+}
+.btn-download:hover { background: #FF7A5C; transform: translateY(-2px); }
+
+.eda-alert-card {
+  background: rgba(255,59,30,0.10);
+  border: 1px solid #FF5A3C; border-radius: var(--radius-lg);
+  padding: var(--sp-4); margin-bottom: var(--sp-6);
+  color: #F4F1EA;
+}
+.eda-alert-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.eda-alert-header h3 { color: #FF5A3C; font-weight: 600; font-size: var(--fs-lg); margin: 0; }
+.eda-alert-icon { font-size: 1.2rem; }
+.eda-alert-text { margin-bottom: 12px; font-size: var(--fs-sm); }
+.btn-explain {
+  background: transparent; border: 1px solid #FF5A3C; color: #FF5A3C;
+  border-radius: var(--radius-md); padding: 4px 12px; font-size: var(--fs-xs);
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-explain:hover:not(:disabled) { background: #FF5A3C; color: #0A0A0A; }
+.btn-explain:disabled { opacity: 0.6; cursor: not-allowed; }
+.eda-alert-explanation { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; font-size: var(--fs-sm); border-left: 3px solid #FF5A3C; }
+
+.target-input {
+  background: #0A0A0A; border: 1px solid rgba(255,90,60,0.40);
+  color: #FF3B1E; border-radius: 4px; padding: 2px 6px;
+  width: 100px; font-family: inherit; font-size: var(--fs-sm); font-weight: 600;
+}
+.target-input:focus { outline: none; border-color: #FF3B1E; }
+
+.eda-health-section {
+  background: #121212; border: 1px solid rgba(244,241,234,0.16);
+  border-radius: var(--radius-xl); padding: var(--sp-6);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.eda-health-section:hover { border-color: rgba(255,90,60,0.40); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+.health-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-4); }
+.health-header h3 { font-size: var(--fs-lg); font-weight: 600; }
+.health-filters { display: flex; gap: 8px; background: rgba(0,0,0,0.2); padding: 4px; border-radius: 8px; }
+.health-filter-btn {
+  background: transparent; border: none; color: #7A756B;
+  padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: var(--fs-sm); transition: 0.2s;
+}
+.health-filter-btn:hover { color: #F4F1EA; }
+.health-filter-btn.active { background: #2A2A2A; color: #fff; font-weight: 500; }
+
+.eda-table-container { max-height: 400px; overflow-y: auto; }
+.status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.status-dot--active { background: #FF3B1E; box-shadow: 0 0 6px rgba(78,204,163,0.4); }
+.status-dot--at-risk { background: #FF5A3C; box-shadow: 0 0 6px rgba(255,59,30,0.40); }
+.status-dot--churned { background: #FF3B1E; box-shadow: 0 0 6px rgba(255,59,30,0.40); }
+
+/* ============================================================
+   CANONICAL SECTION ALIGNMENT — forces every dashboard section
+   card to share the same container + header treatment.
+   ============================================================ */
+.metric-tile,
+.progress-card,
+.eda-card,
+.eda-table-section,
+.eda-health-section {
+  background: #121212 !important;
+  border: 1px solid rgba(244,241,234,0.16) !important;
+  border-radius: var(--radius-xl) !important;
+  padding: var(--sp-6) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
+  margin: 0 0 var(--sp-6) 0 !important;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal) !important;
+}
+.metric-tile:hover,
+.progress-card:hover,
+.eda-card:hover,
+.eda-table-section:hover,
+.eda-health-section:hover {
+  border-color: rgba(255,90,60,0.40) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35) !important;
+}
+
+/* Unified section header (title + optional subtitle) */
+.progress-card > h3,
+.eda-card > h3,
+.eda-table-section > h3,
+.health-header > h3 {
+  font-size: var(--fs-lg) !important;
+  font-weight: 600 !important;
+  color: #F4F1EA !important;
+  margin: 0 0 var(--sp-1) 0 !important;
+  letter-spacing: 0.1px;
+}
+.progress-card__label,
+.eda-card > p,
+.eda-table-section > p {
+  font-size: var(--sm, var(--fs-sm)) !important;
+  color: #7A756B !important;
+  margin: 0 0 var(--sp-4) 0 !important;
+}
+
+/* Keep grid children flush inside their grid (grid handles gap) */
+.eda-two-col > .metric-tile,
+.eda-two-col > .progress-card,
+.eda-grid > .eda-card { margin-bottom: 0 !important; }
+
+/* Header row for the Customer Health section aligns with others */
+.health-header { margin-bottom: var(--sp-4) !important; }
+
+/* ── Targeted font-color updates (text color only) ──────────────
+   Title + KPI values → white; positive MoM arrow → success green.
+   No other properties are changed. */
+.eda-title {
+  color: #FFFFFF !important;
+  background: none !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
+.kpi-card__value { color: #FFFFFF !important; }
+.metric-tile__arrow.positive { color: #22C55E !important; }
+
+/* ── Detailed breakdown table — match the "Customer Health" table's look ──
+   Same card/header/th/td base is already shared via .eda-table. These
+   overrides strip this table's extra row tints, colored text, and sticky
+   first column so it renders as uniform plain rows like Customer Health. */
+.eda-table-section .eda-table__row--high,
+.eda-table-section .eda-table__row--low,
+.eda-table-section .eda-table__row--avg { background: transparent !important; }
+
+.eda-table-section .eda-table__row--high td,
+.eda-table-section .eda-table__row--low td,
+.eda-table-section .eda-table__row--avg td,
+.eda-table-section .text-green,
+.eda-table-section .text-red { color: #F4F1EA !important; }
+
+/* Neutralize the sticky first column so it looks like a normal cell */
+.eda-table-section .sticky-col {
+  position: static !important;
+  background: transparent !important;
+}
+
+/* ============================================================
+   EDA GRAPH GRID ALIGNMENT — makes every chart card line up:
+   equal-height rows, titles/descriptions occupy a fixed block so
+   the charts all start at the same Y, and insight strips are
+   pinned to the bottom so they align across columns.
+   ============================================================ */
+
+/* Cards in the same grid row share full height */
+.eda-grid { align-items: stretch !important; }
+.eda-grid > .eda-card { height: 100% !important; }
+
+/* Reserve a consistent header block (title + description) so charts
+   start at the same vertical offset regardless of text wrapping. */
+.eda-card > h3 {
+  min-height: calc(var(--fs-lg) * 1.3 * 2); /* up to 2 lines */
+  display: flex; align-items: flex-start;
+}
+.eda-card > p {
+  min-height: calc(var(--fs-sm) * 1.5 * 2); /* up to 2 lines */
+}
+
+/* Uniform chart area height across all cards */
+.eda-card .eda-chart-wrapper,
+.eda-card .cal-heatmap,
+.eda-card .leaderboard {
+  height: 350px !important;
+  min-height: 350px;
+  flex-grow: 0 !important;
+}
+
+/* Pin the insight strip to the bottom so strips align across the grid */
+.eda-card > .eda-insight { margin-top: auto !important; }
